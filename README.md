@@ -1,8 +1,6 @@
 # Meta Parser
-Small Node.js module for getting page Meta info.
-However, other types of page content, such as custom selectors, are also supported.
-
-**UPDATE :** Now you can creat multiple `Parser` objects and manage them separately.
+Small Node.js module for getting page Meta info.<br>
+Moreover, other types of page content, such as custom selectors, are also supported. Please, refer to [Selectors](#selectors) section for more information.
 
 ## Table of contents
 
@@ -11,13 +9,12 @@ However, other types of page content, such as custom selectors, are also support
 - [Settings](#default-settings)
 - [Selectors](#selectors)
 - [Errors](#errors)
+- [Updates](#updates)
 
 
 ## Basic Usage
-Get the Meta contents of the given page with `default parameters`.
-
-**fetch** function returns a Promise object, so can easily be integrated with other promises.
-
+Get the Meta contents of the given page with `default parameters`.<br>
+**fetch** function returns a Promise object, so can easily be integrated with other promises.<br>
 For list of default selectors, please refere to [Selectors](#selectors)
 
 ```js
@@ -431,4 +428,31 @@ There are 5 types of errors the module can return :
     error   : 'Unknown', 
     message : 'Unexpected error' 
   }
+```
+## Updates 
+This section includes short desciption of already existing updates that will be documented in more details as soon as possible.
+For now, please, refer to implementation.
+
+- Now it is possible to set the expected return type of the request and fire an error if it doesn't match.<br>
+In addition, more than one expected return type may be set. If this is the case, the response type must be **one of** the expected types.<br>
+For this, **expectResponseType** and **expectResponseTypeOnce** are used.
+
+```js
+let parser = require('./lib/parser').create()
+
+parser.expectResponseType('image')
+  .fetch('url')
+  .then(data => {
+    // your handler
+  })
+```
+```js
+let parser = require('./lib/parser').create()
+
+// The expected response type array will be refreshed after this request
+parser.expectResponseTypeOnce('text/css')
+  .fetch('url')
+  .then(data => {
+    // your handler
+  })
 ```
